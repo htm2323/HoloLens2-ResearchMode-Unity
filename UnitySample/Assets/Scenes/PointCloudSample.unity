@@ -173,7 +173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &119160457
 Transform:
   m_ObjectHideFlags: 0
@@ -966,7 +966,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &349520857
 Transform:
   m_ObjectHideFlags: 0
@@ -1218,7 +1218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &456786860
 Transform:
   m_ObjectHideFlags: 0
@@ -1867,7 +1867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa057c5b267aac542bd34a1c0d8e2a50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  depthSensorMode: 0
+  depthSensorMode: 1
   enablePointCloud: 1
   depthPreviewPlane: {fileID: 456786859}
   shortAbImagePreviewPlane: {fileID: 349520856}
@@ -1950,7 +1950,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &891683167
 MeshCollider:
   m_ObjectHideFlags: 0

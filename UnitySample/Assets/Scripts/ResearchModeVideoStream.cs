@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
 using TMPro;
+using System.IO;
 
 #if ENABLE_WINMD_SUPPORT
 using HL2UnityPlugin;
@@ -21,7 +22,7 @@ public class ResearchModeVideoStream : MonoBehaviour
         LongThrow,
         None
     };
-    [SerializeField] DepthSensorMode depthSensorMode = DepthSensorMode.ShortThrow;
+    [SerializeField] DepthSensorMode depthSensorMode = DepthSensorMode.LongThrow;
     [SerializeField] bool enablePointCloud = true;
 
     TCPClient tcpClient;
@@ -61,6 +62,9 @@ public class ResearchModeVideoStream : MonoBehaviour
     public GameObject pointCloudRendererGo;
     public Color pointColor = Color.white;
     private PointCloudRenderer pointCloudRenderer;
+
+    private float timecount = 0f;
+
 #if ENABLE_WINMD_SUPPORT
     Windows.Perception.Spatial.SpatialCoordinateSystem unityWorldOrigin;
 #endif
@@ -223,6 +227,32 @@ public class ResearchModeVideoStream : MonoBehaviour
 
                 longDepthMediaTexture.LoadRawTextureData(longDepthFrameData);
                 longDepthMediaTexture.Apply();
+
+                timecount += UnityEngine.Time.deltaTime;
+
+                if (timecount >= 0.5f)
+                {
+                    string filename = string.Format(@"capture_depth{0}_n.png", UnityEngine.Time.time);
+                    Debug.Log("create filename : " + filename);
+                    string path = System.IO.Path.Combine(Application.persistentDataPath, filename);
+                    Texture2D tex = new Texture2D(320, 288, TextureFormat.RGB24, false);
+
+                    for (int i = 0; i < 320; i++)
+                    {
+                        for (int j = 0; j < 288; j++)
+                        {
+                            float depth_num = longDepthMediaTexture.GetPixel(i, j).a;
+                            Color color = new Color(depth_num, depth_num, depth_num, 1);
+                            tex.SetPixel(i, j, color);
+                        }
+                    }
+
+                    //Debug.Log(depthMediaTexture.GetPixel(256, 256));
+                    byte[] depth_data = tex.EncodeToPNG();
+                    File.WriteAllBytes(path, depth_data);
+                    Debug.Log(filename + "successed saving to : " + path);
+                    timecount = 0f;
+                }
             }
         }
 
